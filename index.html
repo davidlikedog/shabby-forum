@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myModule">
+<head>
+    <meta charset="UTF-8">
+    <title>A small forum web</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mine.css">
+</head>
+<body ng-controller="indexCtrl">
+
+<!--头开始-->
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-brand">David</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mymodal">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="mymodal">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="loginIn.html">登录</a></li>
+                <li><a href="register.html">注册</a></li>
+                <li><a href="addForum.html">添加</a></li>
+                <li><a href="#">注销</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--头结束-->
+
+<!--身体开始-->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12" ng-repeat="n in allMessage">
+            <a href="" class="article">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <span>{{n.header}}</span>
+                        <span class="article-time">{{n.time}}</span>
+                    </div>
+                    <div class="panel-body">
+                        {{n.content}}
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<!--身体结束-->
+
+</body>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/angular.js"></script>
+<script src="js/mine.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/mine.js"></script>
+</html>
