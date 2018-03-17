@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myModule">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A small forum web</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/mine.css">
+</head>
+<body>
+
+<!--头开始-->
+<div ng-include="'tem/header.html'"></div>
+<!--头结束-->
+
+<!--身体开始-->
+<div class="container" ng-controller="msgDetailCtrl">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {{msg.header}} - {{msg.name}}
+                        <span style="float: right;color: grey;font-size: 14px;">{{msg.time}}</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p style="color: grey;">{{msg.description}}</p>
+                    <hr>
+                    <div ng-bind-html="msg.content|to_trusted"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--身体结束-->
+
+</body>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/angular.js"></script>
+<script src="js/mine.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/mine.js"></script>
+</html>

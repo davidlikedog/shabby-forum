@@ -15,24 +15,26 @@
 <!--头结束-->
 
 <!--身体开始-->
-<div class="container" ng-controller="indexCtrl">
+<div class="container" ng-controller="myForumCtrl">
     <div class="row" >
-        <div class="col-xs-12 col-md-8 col-md-offset-2" ng-repeat="n in allMessage">
-            <a href="msgDetail.html?id={{n.id}}" class="index-a">
-                <div class="media index-row">
-                    <div class="media-left">
-                        <img class="media-object msg-img" ng-src="img/headImg/{{n.headImg}}" alt="">
+        <div class="col-xs-12 col-md-8 col-md-offset-2" ng-repeat="n in myMsg">
+            <div class="media index-row gesture" ng-click="enter(this,$event)">
+                <div class="media-left">
+                    <img class="media-object msg-img" ng-src="img/headImg/{{n.headImg}}" alt="">
+                </div>
+                <div class="media-body">
+                    <span class="media-heading msg-title">{{n.header}}</span>
+                    <span class="msg-time">{{n.time}}</span>
+                    <span class="msg-author">作者：{{n.name}}</span>
+                    <div class="text-omit" style="float: left;width: 60%;">
+                        简介：{{n.description}}
                     </div>
-                    <div class="media-body">
-                        <span class="media-heading msg-title">{{n.header}}</span>
-                        <span class="msg-time">{{n.time}}</span>
-                        <span class="msg-author">作者：{{n.name}}</span>
-                        <div class="text-omit">
-                            简介：{{n.description}}
-                        </div>
+                    <div style="float: right;">
+                        <button class="btn btn-xs btn-default" ng-click="modify(this,$event)">修改</button>
+                        <button class="btn btn-xs btn-default" ng-click="delOne(this,$event)" >删除</button>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
 

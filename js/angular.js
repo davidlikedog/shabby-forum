@@ -9462,7 +9462,7 @@ function $HttpProvider() {
     /**
      * Interceptors stored in reverse order. Inner interceptors before outer interceptors.
      * The reversal is needed so that we can build up the interception chain around the
-     * server request.
+     * s request.
      */
     var reversedInterceptors = [];
 
@@ -11264,7 +11264,7 @@ function stripFile(url) {
   return url.substr(0, stripHash(url).lastIndexOf('/') + 1);
 }
 
-/* return the server only (scheme://host:port) */
+/* return the s only (scheme://host:port) */
 function serverBase(url) {
   return url.substring(0, url.indexOf('/', url.indexOf('//') + 2));
 }
@@ -20092,7 +20092,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
  *
  * Note: the purpose of `ngForm` is to group controls,
  * but not to be a replacement for the `<form>` tag with all of its capabilities
- * (e.g. posting to the server, ...).
+ * (e.g. posting to the s, ...).
  *
  * @param {string=} ngForm|name Name of the form. If specified, the form controller will be published into
  *                       related scope, under this name.
@@ -24801,7 +24801,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
       // This prevents changing an invalid modelValue to undefined
       if (!allowInvalid && prevValid !== allValid) {
         // Note: Don't check ctrl.$valid here, as we could have
-        // external validators (e.g. calculated on the server),
+        // external validators (e.g. calculated on the s),
         // that just call $setValidity and need the model value
         // to calculate their validity.
         ctrl.$modelValue = allValid ? modelValue : undefined;
@@ -24968,7 +24968,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     ctrl.$$runValidators(modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
       if (!allowInvalid) {
         // Note: Don't check ctrl.$valid here, as we could have
-        // external validators (e.g. calculated on the server),
+        // external validators (e.g. calculated on the s),
         // that just call $setValidity and need the model value
         // to calculate their validity.
         ctrl.$modelValue = allValid ? modelValue : undefined;

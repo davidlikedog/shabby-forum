@@ -1,0 +1,24 @@
+<div class="navbar navbar-default navbar-fixed-top" ng-controller="isLoginInCtrl">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-brand">{{name}}</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mymodal">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="mymodal">
+            <ul class="nav navbar-nav">
+                <li ng-if="loginIn"><a href="myForum.html">我的发布</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-if="offLine"><a href="loginIn.html">登录</a></li>
+                <li ng-if="offLine"><a href="register.html">注册</a></li>
+                <li ng-if="loginIn"><a href="addForum.html">添加</a></li>
+                <li ng-if="loginIn"><a href="" ng-click="unsetUser()">注销</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

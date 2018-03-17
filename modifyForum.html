@@ -15,22 +15,22 @@
 <!--头结束-->
 
 <!--帖子开始-->
-<div class="container" ng-controller="addOneCtrl">
+<div class="container" ng-controller="modifyForumCtrl">
     <div class="row register bg-success">
         <div class="col-sm-8 col-sm-offset-2">
             <form>
                 <div class="form-group">
                     <label for="header">标题：</label>
-                    <input type="text" class="form-control" ng-model="header" id="header" placeholder="标题">
+                    <input type="text" class="form-control" ng-model="header" id="header">
                 </div>
                 <div class="form-group">
-                    <label for="headImg">封面：(尺寸强制要求(68*62))</label>
+                    <label for="headImg">封面：(尺寸强制要求：68*62)</label>
                     <input type="file" accept="image/*" class="form-control" file-model="headImg" id="headImg" onchange="angular.element(this).scope().img_upload(this.files)">
-                    <img style="width: 68px;height: 62px;" ng-show="haveHeadImg" ng-src="{{imgSrc}}" alt="">
+                    <img style="width: 68px;height: 62px;" ng-src="{{imgSrc}}" alt="">
                 </div>
                 <div class="form-group">
                     <label for="description">描述：</label>
-                    <input type="text" class="form-control" id="description" ng-model="description" placeholder="描述">
+                    <input type="text" class="form-control" id="description" ng-model="description">
                 </div>
                 <div class="form-group">
                     <label>内容：</label>
@@ -38,7 +38,7 @@
                     <div style="padding: 2px 0; color: #ccc"></div>
                     <div id="div2" class="text"></div>
                 </div>
-                <button type="submit" ng-click="addOne()" ng-disabled="isLoading" class="btn btn-default">提交</button>
+                <button type="submit" ng-click="modifyOne()" ng-disabled="isLoading" class="btn btn-default">提交</button>
             </form>
         </div>
         <div class="col-sm-2"></div>

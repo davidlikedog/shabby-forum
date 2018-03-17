@@ -10,7 +10,6 @@ define("BASECLASS", ROOT.'baseClass'.DS);
 define("CTRL_PATH", ROOT.'controllerClass'.DS);
 define("MODEL_PATH", ROOT.'modelClass'.DS);
 
-
 function __autoload($class){
     $allBaseClass=array('MYSQLDB','MYSQL','modelFactory','baseController');
     if (in_array($class, $allBaseClass)){
