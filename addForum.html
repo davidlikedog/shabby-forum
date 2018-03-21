@@ -24,7 +24,7 @@
                     <input type="text" class="form-control" ng-model="header" id="header" placeholder="标题">
                 </div>
                 <div class="form-group">
-                    <label for="headImg">封面：(尺寸强制要求(68*62))</label>
+                    <label for="headImg">封面：(尺寸强制要求: 68*62 或它的倍数)</label>
                     <input type="file" accept="image/*" class="form-control" file-model="headImg" id="headImg" onchange="angular.element(this).scope().img_upload(this.files)">
                     <img style="width: 68px;height: 62px;" ng-show="haveHeadImg" ng-src="{{imgSrc}}" alt="">
                 </div>
@@ -49,7 +49,6 @@
 </body>
 <script src="js/jquery-1.11.3.js"></script>
 <script src="js/angular.js"></script>
-<script src="js/mine.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/wangEditor.js"></script>
 <script src="js/mine.js"></script>
