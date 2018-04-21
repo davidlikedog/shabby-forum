@@ -71,3 +71,23 @@ body{
     display: block;
     color: #656464;
 }
+
+/*评论的css*/
+.button-top{
+    margin-top: 5px;
+}
+.allComment{
+    padding: 10px;
+    border: 1px solid pink;
+    border-radius: 5px;
+}
+.oneComment{
+    background: #f9f6f6;
+    padding: 5px;
+    margin: 2px 0;
+    border-radius: 5px;
+}
+.date{
+    float: right;
+    font-size: 0.5rem;
+}

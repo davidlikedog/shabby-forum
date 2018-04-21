@@ -10,11 +10,11 @@ class loginInController{
         $data=$model->verify("select name from forumuser where account=$account and password=$password;");
         $result=array();
         if($data){
-            $result['status']='登录成功';
+            $result['status']=200;
             $result['name']=$data;
             $_SESSION['name']=$result;
         }else{
-            $result['status']='登录失败';
+            $result['status']=404;
         }
         echo json_encode($result);
     }

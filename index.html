@@ -13,48 +13,13 @@
 <!--头开始-->
 <div ng-include="'tem/header.html'"></div>
 <!--头结束-->
-
-<!--身体开始-->
-<div class="container" ng-controller="indexCtrl">
-    <div class="row" >
-        <div class="col-xs-12 col-md-8 col-md-offset-2" ng-repeat="n in allMessage">
-            <a href="msgDetail.html?id={{n.id}}" class="index-a">
-                <div class="media index-row">
-                    <div class="media-left">
-                        <img class="media-object msg-img" ng-src="img/headImg/{{n.headImg}}" alt="">
-                    </div>
-                    <div class="media-body">
-                        <span class="media-heading msg-title">{{n.header}}</span>
-                        <span class="msg-time">{{n.time}}</span>
-                        <span class="msg-author">作者：{{n.name}}</span>
-                        <div class="text-omit">
-                            简介：{{n.description}}
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="text-align: center">
-                <button class="btn btn-info" ng-click="getMore()" ng-disabled="isLoading" ng-if="hasMore">
-                    <span ng-show="!isLoading">加载更多</span>
-                    <span ng-show="isLoading">加载中</span>
-                </button>
-                <div ng-if="!hasMore" class="alert alert-danger" style="margin-top: 5px;">无更多数据可以加载</div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--身体结束-->
-
-
+<div ng-view></div>
 
 </body>
 <script src="js/jquery-1.11.3.js"></script>
 <script src="js/angular.js"></script>
+<script src="js/angular-route.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="js/wangEditor.js"></script>
 <script src="js/mine.js"></script>
 </html>

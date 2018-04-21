@@ -1,4 +1,4 @@
-angular.module('myModule', ['ng'])
+angular.module('myModule', ['ng','ngRoute'])
 .controller("isLoginInCtrl", function ($scope, $http) {
     var status = sessionStorage.getItem("status");
     var name = sessionStorage.getItem("name");
@@ -14,7 +14,7 @@ angular.module('myModule', ['ng'])
         sessionStorage.removeItem("name");
         $http.get("./s/server.php?addr=loginIn&act=offLine").success(function (data) {
             alert(data.msg);
-            window.location.href = "index.html";
+            window.location.href = "";
         })
     }
 }).controller('indexCtrl', function ($scope, $http) {
@@ -43,7 +43,7 @@ angular.module('myModule', ['ng'])
         $http.get('./s/server.php?addr=myForum&act=getMyMsg&start=0&name='+name+'').success(function(data) {
             if(data.status===404) {
                 alert('对不起，请登录！');
-                window.location.href = "index.html";
+                window.location.href = "";
             }else{
                 $scope.myMsg = data;
                 $scope.isLoading=false;
@@ -61,11 +61,11 @@ angular.module('myModule', ['ng'])
         };
         $scope.modify=function(id,$event) {
             $event.stopPropagation();
-            window.location.href = "modifyForum.html?id="+id.n.id;
+            window.location.href = "#/modifyForum?id="+id.n.id;
         };
         $scope.enter=function(id,$event) {
             $event.stopPropagation();
-            window.location.href="myMsgDetail.html?id="+id.n.id;
+            window.location.href="#/myMsgDetail?id="+id.n.id;
         };
         $scope.delOne=function(id,$event) {
             $event.stopPropagation();
@@ -74,16 +74,16 @@ angular.module('myModule', ['ng'])
                 $http.get('./s/server.php?addr=myForum&act=delOne&id='+delId+'&name='+name).success(function(data) {
                     if(data.status===200) {
                         alert(data.result+' 立即返回‘我的发布’页面');
-                        window.location.href = "myForum.html";
+                        window.location.href = "#/myForum?t="+Math.floor(Math.random());
                     }else if(data.status===404){
                         alert(data.err+' 立即返回主页面');
-                        window.location.href = "index.html";
+                        window.location.href = "";
                     }
                 })
             }
         };
     }
-}).controller('modifyForumCtrl',function($scope, $http, $location) {
+}).controller('modifyForumCtrl',function($scope, $http, $routeParams) {
     var E = window.wangEditor;
     var editor = new E('#div1','#div2');
     editor.customConfig.menus = [
@@ -122,9 +122,6 @@ angular.module('myModule', ['ng'])
         };
     };
 
-    var url = $location.$$absUrl;
-    var start = $location.$$absUrl.indexOf("?");
-    var id = url.slice(start + 4);
     var name = sessionStorage.getItem("name");
     var status = sessionStorage.getItem("status");
 
@@ -132,10 +129,10 @@ angular.module('myModule', ['ng'])
     var reg=/<img\s+(.*?)src\s*=\s*['"]([^'"]*)['"]/g;
 
     if(status === "200" && name !== null) {
-        $http.get('./s/server.php?addr=myForum&act=getModifyData&id='+id+'&name='+name).success(function(data) {
+        $http.get('./s/server.php?addr=myForum&act=getModifyData&id='+$routeParams.id+'&name='+name).success(function(data) {
             if(data.status===404) {
                 alert(data.err + ' 立即返回主页面');
-                window.location.href = "index.html";
+                window.location.href = "";
             }else if(data.status===200) {
                 $scope.header = data.header;
                 $scope.imgSrc = './img/headImg/' + data.headImg;
@@ -169,7 +166,7 @@ angular.module('myModule', ['ng'])
             console.log(imgs);
             console.log(elseImg);
 
-            data.append('id', id);
+            data.append('id', $routeParams.id);
             data.append('header', $scope.header);
             data.append('newHeadImg', newHeadImg);
             data.append('oldHeadImg', oldHeadImg);
@@ -187,16 +184,16 @@ angular.module('myModule', ['ng'])
             }).success(function(data) {
                 if(data.status===200) {
                     alert(data.result + ' 立即返回主页面');
-                    window.location.href = 'index.html';
+                    window.location.href = '';
                 }else{
                     alert('修改失败，立即返回主页面');
-                    window.location.href = 'index.html';
+                    window.location.href = '';
                 }
             })
         };
     }else{
         alert('请登录');
-        window.location.href = "index.html";
+        window.location.href = "";
     }
 
 }).controller('loginCtrl', function ($scope, $http) {
@@ -217,18 +214,23 @@ angular.module('myModule', ['ng'])
                     return $.param(data);
                 }
             }).success(function (data) {
-                var keyStatus = "status";
-                var keyName = "name";
-                sessionStorage.setItem(keyStatus, "200");
-                sessionStorage.setItem(keyName, data.name);
-                window.location.href = "index.html";
+                if(data.status===200) {
+                    var keyStatus = "status";
+                    var keyName = "name";
+                    sessionStorage.setItem(keyStatus, "200");
+                    sessionStorage.setItem(keyName, data.name);
+                    window.location.href = "";
+                }else{
+                    alert('登录失败');
+                    $scope.account = '';
+                    $scope.password = '';
+                    window.location.href = "#/loginIn";
+                }
             })
         }
     }
-}).controller('myMsgDetail',function($scope, $http, $location) {
-    var url = $location.$$absUrl;
-    var start = $location.$$absUrl.indexOf("?");
-    var id = url.slice(start + 4);
+}).controller('myMsgDetail',function($scope, $http, $routeParams) {
+    var id = $routeParams.id;
     var name = sessionStorage.getItem("name");
     var status = sessionStorage.getItem("status");
     if(status === "200" && name !== null) {
@@ -237,34 +239,106 @@ angular.module('myModule', ['ng'])
             $scope.myMsg = data;
         });
         $scope.modify=function() {
-            window.location.href = "modifyForum.html?id="+$scope.id;
+            window.location.href = "#/modifyForum?id="+$scope.id;
         };
         $scope.delOne=function() {
             if(window.confirm("你确定删除它吗？")){
                 $http.get('./s/server.php?addr=myForum&act=delOne&id='+$scope.id).success(function(data) {
                     if(data.status===200) {
                         alert(data.result+'立即返回‘我的发布’页面');
-                        window.location.href = "myForum.html";
+                        window.location.href = "#/myForum";
                     }else if(data.status===404){
                         alert(data.err+' 立即返回主页面');
-                        window.location.href = "index.html";
+                        window.location.href = "";
                     }
                 })
             }
         };
     }else{
         alert('请登录');
-        window.location.href = "index.html";
+        window.location.href = "";
     }
 
-}).controller('msgDetailCtrl', function ($scope, $http, $location) {
-    var url = $location.$$absUrl;
-    var start = $location.$$absUrl.indexOf("?");
-    var id = url.slice(start + 4);
-    console.log(id);
-    $http.get("./s/server.php?addr=msgDetail&act=getMsgDetail&id=" + id + "").success(function (data) {
+}).controller('msgDetailCtrl', function ($scope, $http, $routeParams) {
+    $scope.showButton=false;
+    $scope.showReplay = false;
+    $scope.hasComment=false;
+    $scope.replays = '';
+    var name = sessionStorage.getItem("name");
+    var status = sessionStorage.getItem("status");
+    $http.get("./s/server.php?addr=msgDetail&act=getMsgDetail&id=" + $routeParams.id).success(function (data) {
         $scope.msg = data;
-    })
+    });
+    $http.get("./s/server.php?addr=msgDetail&act=getConversion&id=" + $routeParams.id).success(function(data) {
+        if(data.status===404) {
+            $scope.conversion = [{mgs:'目前还没有评论',time:''}];
+        }else{
+            $scope.conversion = data;
+            $scope.show = true;
+            $scope.hasComment = true;
+            $scope.showButton = true;
+        }
+    });
+    $scope.replay=function(id) {
+        if(name){
+            $scope.showReplay = true;
+            var str=id.$parent.n.msg;
+            var end=str.indexOf("评论");
+            var whoYouReplay=str.slice(0,end);
+            $scope.replays=name + '评论' + whoYouReplay + '：';
+        }else{
+            alert("请登录");
+        }
+    };
+    $scope.comment = '';
+    $scope.addComment=function() {
+        if(status === "200" && name !== null) {
+            $http({
+                method: 'post',
+                url: './s/server.php?addr=msgDetail&act=addOneComment',
+                data: {comment: $scope.comment, name: name, articleId:$routeParams.id, hasComment:$scope.hasComment},
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                transformRequest: function (data) {
+                    return $.param(data);
+                }
+            }).success(function(data) {
+                if(data.status===200) {
+                    $http.get("./s/server.php?addr=msgDetail&act=getConversion&id=" + $routeParams.id).success(function(datas) {
+                        $scope.conversion = datas;
+                    });
+                }else{
+                    alert(data.msg);
+                }
+            });
+        }else{
+            alert('请登录');
+            window.location.href = '';
+        }
+    };
+    $scope.addReplay=function(msg){
+        if(status === "200" && name !== null){
+            $http({
+                method: 'post',
+                url: './s/server.php?addr=msgDetail&act=addOneReplay',
+                data: {replay: msg.replays, name: name, articleId: $routeParams.id},
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                transformRequest: function (data) {
+                    return $.param(data);
+                }
+            }).success(function(data){
+                if(data.status===200) {
+                    $scope.showReplay = false;
+                    $http.get("./s/server.php?addr=msgDetail&act=getConversion&id=" + $routeParams.id).success(function(datas) {
+                        $scope.conversion = datas;
+                    });
+                }else{
+                    alert(data.msg);
+                }
+            });
+        }else{
+            alert('请登录');
+        }
+    }
 }).controller('addOneCtrl', function ($scope, $http) {
 
     var E = window.wangEditor;
@@ -362,14 +436,14 @@ angular.module('myModule', ['ng'])
                         console.log('有错误');
                     }else{
                         alert(data.result + '立即返回主页');
-                        window.location.href = "index.html";
+                        window.location.href = "";
                     }
                     $scope.isLoading=false;
                 })
             }
         }
     } else {
-        window.location.href = "loginIn.html";
+        window.location.href = "#/loginIn";
     }
 }).controller('registerCtrl', function ($scope, $http) {
     var allowSubmit = false;
@@ -462,7 +536,7 @@ angular.module('myModule', ['ng'])
                         var keyName = "name";
                         sessionStorage.setItem(keyStatus, "200");
                         sessionStorage.setItem(keyName, data.name);
-                        window.location.href = "index.html";
+                        window.location.href = "";
                     })
                 } else {
                     alert(data.msg);
@@ -470,6 +544,34 @@ angular.module('myModule', ['ng'])
             })
         }
     }
+}).config(function($routeProvider) {
+    $routeProvider.when('/loginIn',{
+        templateUrl:'tem/loginIn.html',
+        controller:'loginCtrl'
+    }).when('/index',{
+        templateUrl:'tem/main.html',
+        controller:'indexCtrl'
+    }).when('/myForum',{
+        templateUrl:'tem/myForum.html',
+        controller:'myForumCtrl'
+    }).when('/register',{
+        templateUrl:'tem/register.html',
+        controller:'registerCtrl'
+    }).when('/addForum',{
+        templateUrl:'tem/addForum.html',
+        controller:'addOneCtrl'
+    }).when('/msgDetail',{
+        templateUrl:'tem/msgDetail.html',
+        controller:'msgDetailCtrl'
+    }).when('/myMsgDetail',{
+        templateUrl:'tem/myMsgDetail.html',
+        controller:'myMsgDetail'
+    }).when('/modifyForum',{
+        templateUrl:'tem/modifyForum.html',
+        controller:'modifyForumCtrl'
+    }).otherwise({
+        redirectTo:'/index'
+    })
 }).filter('to_trusted', function ($sce) {
     return function (text) {
         return $sce.trustAsHtml(text);

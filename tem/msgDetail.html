@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {{msg.header}} - {{msg.name}}
+                        <span style="float: right;color: grey;font-size: 14px;">{{msg.time}}</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p style="color: grey;">{{msg.description}}</p>
+                    <hr>
+                    <div ng-bind-html="msg.content|to_trusted"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    评论：
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="comment">说一句：</label>
+                            <textarea id="comment" class="form-control" rows="3" ng-model="comment"></textarea>
+                            <button class="btn btn-info button-top" ng-click="addComment()">评论</button>
+                        </div>
+                    </form>
+                    <div class="allComment">
+                        <div class="oneComment" ng-if="hasComment" ng-repeat="n in conversion">
+                            <span>{{n.msg}}</span>
+                            <div style="color: #afafaf;">
+                                {{n.time}}
+                                <button class="btn btn-xs btn-default" style="float: right;" ng-if="showButton" ng-click="replay(this)">回复</button>
+                            </div>
+                        </div>
+                        <div class="input-group input-group-sm" ng-if="showReplay">
+                            <span class="input-group-addon" id="sizing-addon1">回复</span>
+                            <input type="text" class="form-control" ng-model="replays">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" ng-click="addReplay(this)">提交</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
